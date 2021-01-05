@@ -14,23 +14,18 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.secret_key = 'c\xbb\xce>m\xe6(sn:\x19\xe6w\xa0K\x90EI\xbd3\x815Fm'
 plt.switch_backend('Agg')
 
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html')
 
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('grapher/load_file.html')
 
 @app.route('/us', methods=['GET'])
 def us():
     return render_template('about/us.html')
 
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -54,7 +49,13 @@ def upload_file():
         else:
             #Sino, seguir en la misma pagina, agregar el mensaje de errors
             flash('Tipo de archivo incorrecto, seleccione otro archivo.', 'warning')
-    return redirect(url_for('index'))
+    return render_template('grapher/load_file.html')
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/uploaded/<string:filename>', methods=['GET', 'POST'])
 def uploaded(filename):
