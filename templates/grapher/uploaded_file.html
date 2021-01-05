@@ -3,9 +3,38 @@
 {% block body %}
 
 <div class="container">
-    <div class="row text-center">
-        <p>Archivo almacenado con éxito</p>
-    </div>
+    <h2>Personalice su gráfica</h2>
+    <p>Seleccione las opciones deseadas e introduzca un titulo para su gráfica.</p>
+    <form action="" method="POST">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="graph-column">Columnas</label>
+            </div>
+            <select class="custom-select" id="graph-column" name="graph-column">
+                {% for option in options %}
+                <option value="{{option}}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="graph-type">Tipo de gráfica</label>
+            </div>
+            <select class="custom-select" id="graph-type" name="graph-type">
+                {% for graph in graphs %}
+                <option value="{{ graph }}">{{ graph }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="graph-title">Titulo gráfica</label>
+            </div>
+            <input type="text" class="form-control" id="graph-title" name="graph-title" aria-describedby="basic-addon3" required>
+        </div>
+        <a href="{{ url_for('upload_file') }}" class="btn btn-dark mt-3" role="button" aria-pressed="true">Regresar</a>
+        <input type="submit" class="btn btn-success mt-3" name="submit" value="Graficar"><br>
+    </form>
 </div>
 
 

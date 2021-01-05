@@ -1,0 +1,7 @@
+{% extends 'main.html' %}
+
+{% block body %}
+    <h2>Gráfica</h2>
+    <img src="{{ url_for('static', filename=image)}}" class="img-fluid" alt="Gráfica"> 
+    <a href="{{ url_for('uploaded', filename=filename) }}" class="btn btn-dark mt-3" role="button" aria-pressed="true">Regresar</a>
+{% endblock %}
