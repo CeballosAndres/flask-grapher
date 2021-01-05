@@ -69,10 +69,22 @@ def uploaded(filename):
         graph_type = request.form['graph-type']
         graph_title = request.form['graph-title']
         serie = df[graph_column]
-        graph_file_name = "{}.png".format(graph_title)
-        plt.bar(serie.index,serie,color='red')
-        plt.title(graph_title)
-        plt.savefig(os.path.join('./static/graphs', graph_file_name))
+        graph_file_name = None
+        if graph_type == 'Barras':
+            print('de barrras')
+            graph_file_name = "{}-barras.png".format(graph_title)
+            plt.bar(serie.index, serie, color='blue')
+            plt.title(graph_title)
+            plt.savefig(os.path.join('./static/graphs', graph_file_name))
+            plt.clf()
+        elif graph_type == 'Pastel':
+            print('de pastel')
+            graph_file_name = "{}-pastel.png".format(graph_title)
+            plt.pie(serie.index, serie)
+            plt.title(graph_title)
+            plt.savefig(os.path.join('./static/graphs', graph_file_name))
+            plt.clf()
+
         return redirect(url_for('grapher', filename=filename, graph=graph_file_name))
 
     return render_template('grapher/uploaded_file.html', options=options, graphs=graphs)
