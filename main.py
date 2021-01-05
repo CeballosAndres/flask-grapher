@@ -47,7 +47,7 @@ def upload_file():
         # revisar que sea del tipo csv
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['./files'], filename))
             #De serlo, ir a la nueva pagina una vez subido
             flash('Archivo almacenado con éxito.', 'success')
             return redirect(url_for('uploaded', filename=filename))
