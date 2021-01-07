@@ -1,7 +1,12 @@
 {% extends 'main.html' %}
 
 {% block body %}
-    <h2>Gráfica</h2>
-    <img src="{{ url_for('static', filename=image)}}" class="img-fluid" alt="Gráfica"> 
-    <a href="{{ url_for('uploaded', filename=filename) }}" class="btn btn-dark mt-3" role="button" aria-pressed="true">Regresar</a>
+<div class="container">
+    <h2>Gráfica generada</h2>
+    <div class="row">
+        <img src="{{ url_for('static', filename=image)}}" class="img-fluid" alt="Gráfica">
+    </div>
+    <a href="{{ url_for('uploaded', filename=filename) }}" class="btn btn-dark mt-3" role="button"
+            aria-pressed="true">Regresar</a>
+</div>
 {% endblock %}

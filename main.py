@@ -30,24 +30,24 @@ def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part','warning')
+            flash('No file part', 'warning')
             return redirect(request.url)
-        # recibir el archivo 
+        # recibir el archivo
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
-            flash('No selected file','warning')
+            flash('No selected file', 'warning')
             return redirect(request.url)
         # revisar que sea del tipo csv
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #De serlo, ir a la nueva pagina una vez subido
+            # De serlo, ir a la nueva pagina una vez subido
             flash('Archivo almacenado con éxito.', 'success')
             return redirect(url_for('uploaded', filename=filename))
         else:
-            #Sino, seguir en la misma pagina, agregar el mensaje de errors
+            # Sino, seguir en la misma pagina, agregar el mensaje de errors
             flash('Tipo de archivo incorrecto, seleccione otro archivo.', 'warning')
     return render_template('grapher/load_file.html')
 
@@ -59,22 +59,25 @@ def allowed_file(filename):
 
 @app.route('/uploaded/<string:filename>', methods=['GET', 'POST'])
 def uploaded(filename):
-    graphs = ['Barras','Pastel']
+    graphs = ['Pastel', 'Barras']  # add 'Lineas' and 'Puntos'
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+    colors = ['black', 'red', 'green', 'lemon','aqua', 'yellow',
+              'orange', 'navy', 'blue','purple', 'deeppink', 'teal', 'tomato']
     file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     df = pd.read_csv(file)
     options = df.select_dtypes(include=numerics).columns.format()
 
     if request.method == 'POST':
-        graph_column = request.form['graph-column']
         graph_type = request.form['graph-type']
+        graph_column = request.form['graph-column']
         graph_title = request.form['graph-title']
+        graph_color = request.form['graph-color']
         serie = df[graph_column]
         graph_file_name = None
         if graph_type == 'Barras':
             print('de barrras')
             graph_file_name = "{}-barras.png".format(graph_title)
-            plt.bar(serie.index, serie, color='blue')
+            plt.bar(serie.index, serie, color=graph_color)
             plt.title(graph_title)
             plt.savefig(os.path.join('./static/graphs', graph_file_name))
             plt.clf()
@@ -88,12 +91,14 @@ def uploaded(filename):
 
         return redirect(url_for('grapher', filename=filename, graph=graph_file_name))
 
-    return render_template('grapher/uploaded_file.html', options=options, graphs=graphs)
+    return render_template('grapher/uploaded_file.html', options=options, graphs=graphs, colors=colors)
+
 
 @app.route('/grapher/<string:filename>/<string:graph>', methods=['GET'])
 def grapher(filename, graph):
     graph_path = os.path.join('graphs', graph)
     return render_template('grapher/grapher.html', image=graph_path, filename=filename)
+
 
 if __name__ == '__main__':
     app.run(port=PORT, debug=DEBUG)

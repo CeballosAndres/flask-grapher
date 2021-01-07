@@ -2,6 +2,12 @@
 
 {% block body %}
 
+<style>
+    .hiddenOption {
+        display: none;
+    }
+</style>
+
 <div class="container">
     <h2>Personalice su gráfica</h2>
     <p>Seleccione las opciones deseadas e introduzca un titulo para su gráfica.</p>
@@ -18,7 +24,7 @@
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="graph-type">Tipo de gráfica</label>
+                <label class="input-group-text" for="graph-type">Tipo</label>
             </div>
             <select class="custom-select" id="graph-type" name="graph-type">
                 {% for graph in graphs %}
@@ -26,11 +32,24 @@
                 {% endfor %}
             </select>
         </div>
+
+        <div class="input-group mb-3" id="colors" style="display: none;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="graph-color">Color</label>
+            </div>
+            <select class="custom-select" name="graph-color" id="graph-color">
+                {% for color in colors %}
+                <option value="{{ color }}">{{ color }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="graph-title">Titulo gráfica</label>
             </div>
-            <input type="text" class="form-control" id="graph-title" name="graph-title" aria-describedby="basic-addon3" required>
+            <input type="text" class="form-control" id="graph-title" name="graph-title" aria-describedby="basic-addon3"
+                required>
         </div>
         <a href="{{ url_for('upload_file') }}" class="btn btn-dark mt-3" role="button" aria-pressed="true">Regresar</a>
         <input type="submit" class="btn btn-success mt-3" name="submit" value="Graficar"><br>
