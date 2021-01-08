@@ -61,7 +61,7 @@ def allowed_file(filename):
 def uploaded(filename):
     graphs = ['Pastel', 'Barras']  # add 'Lineas' and 'Puntos'
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-    colors = ['black', 'red', 'green', 'lemon','aqua', 'yellow',
+    colors = ['black', 'red', 'green','aqua', 'yellow',
               'orange', 'navy', 'blue','purple', 'deeppink', 'teal', 'tomato']
     file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     df = pd.read_csv(file)
