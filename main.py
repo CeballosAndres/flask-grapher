@@ -59,7 +59,7 @@ def allowed_file(filename):
 
 @app.route('/uploaded/<string:filename>', methods=['GET', 'POST'])
 def uploaded(filename):
-    graphs = ['Pastel', 'Barras']  # add 'Lineas' and 'Puntos'
+    graphs = ['Pastel', 'Barras', 'Lineas', 'Puntos']  # add 'Lineas' and 'Puntos'
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     colors = ['black', 'red', 'green','aqua', 'yellow',
               'orange', 'navy', 'blue','purple', 'deeppink', 'teal', 'tomato']
@@ -75,16 +75,26 @@ def uploaded(filename):
         serie = df[graph_column]
         graph_file_name = None
         if graph_type == 'Barras':
-            print('de barrras')
             graph_file_name = "{}-barras.png".format(graph_title)
             plt.bar(serie.index, serie, color=graph_color)
             plt.title(graph_title)
             plt.savefig(os.path.join('./static/graphs', graph_file_name))
             plt.clf()
         elif graph_type == 'Pastel':
-            print('de pastel')
             graph_file_name = "{}-pastel.png".format(graph_title)
             plt.pie(serie.index, serie)
+            plt.title(graph_title)
+            plt.savefig(os.path.join('./static/graphs', graph_file_name))
+            plt.clf()
+        elif graph_type == 'Lineas':
+            graph_file_name = "{}-linea.png".format(graph_title)
+            plt.plot(serie.index, serie, color=graph_color)
+            plt.title(graph_title)
+            plt.savefig(os.path.join('./static/graphs', graph_file_name))
+            plt.clf()
+        elif graph_type == 'Puntos':
+            graph_file_name = "{}-punto.png".format(graph_title)
+            plt.plot(serie.index, serie, 'o', color=graph_color)
             plt.title(graph_title)
             plt.savefig(os.path.join('./static/graphs', graph_file_name))
             plt.clf()
