@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Hacer que aparezca el select de Color solo si el tipo es de Barras
+    // Hacer que aparezca el select de Color solo si el tipo es de Barras, Lineas o Puntos
     $('#graph-type').change(function () {
         $(this).val() == 'Barras' || $(this).val() == 'Lineas' || $(this).val() == 'Puntos' ? $('#colors').show() : $('#colors').hide();
     });
