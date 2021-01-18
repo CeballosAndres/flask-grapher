@@ -59,7 +59,7 @@ def allowed_file(filename):
 
 @app.route('/uploaded/<string:filename>', methods=['GET', 'POST'])
 def uploaded(filename):
-    graphs = ['Pastel', 'Barras', 'Lineas', 'Puntos']  # add 'Lineas' and 'Puntos'
+    graphs = ['Pastel', 'Barras', 'Lineas', 'Puntos']
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
     colors = ['black', 'red', 'green','aqua', 'yellow',
               'orange', 'navy', 'blue','purple', 'deeppink', 'teal', 'tomato']
